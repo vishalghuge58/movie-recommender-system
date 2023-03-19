@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Movie Recommender System</title>
+	<style>
+		body {
+			background-color: #f8f8f8;
+			font-family: Arial, sans-serif;
+		}
+		h1 {
+			text-align: center;
+			margin-top: 50px;
+			margin-bottom: 30px;
+		}
+		form {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin-top: 30px;
+		}
+		label {
+			font-size: 20px;
+			margin-bottom: 10px;
+		}
+		select {
+			padding: 5px;
+			font-size: 16px;
+			border: none;
+			border-radius: 5px;
+			box-shadow: 0px 2px 6px rgba(0,0,0,0.3);
+			margin-bottom: 20px;
+			cursor: pointer;
+			background-color: white;
+			color: #444;
+			width: 300px;
+		}
+		input[type="submit"] {
+			padding: 10px 20px;
+			font-size: 18px;
+			border: none;
+			border-radius: 5px;
+			background-color: #f39c12;
+			color: white;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+		}
+		input[type="submit"]:hover {
+			background-color: #e67e22;
+		}
+		h2 {
+			text-align: center;
+			margin-top: 50px;
+			margin-bottom: 20px;
+		}
+		.movies-container {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			align-items: center;
+		}
+		.movie-card {
+			margin: 10px;
+			box-shadow: 0px 2px 6px rgba(0,0,0,0.3);
+			border-radius: 5px;
+			overflow: hidden;
+			cursor: pointer;
+			transition: transform 0.3s ease;
+			max-width: 200px;
+		}
+		.movie-card:hover {
+			transform: scale(1.05);
+		}
+		.movie-card img {
+			width: 100%;
+			height: auto;
+			display: block;
+		}
+		.movie-card h3 {
+			font-size: 16px;
+			margin: 10px;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<h1>Movie Recommender System</h1>
+	<form method="POST">
+		<label>Select a movie:</label>
+		<select name="selected_movie">
+			{% for movie in movie_list %}
+				<option value="{{ movie }}" {% if movie == selected_movie %} selected {% endif %}>{{ movie }}</option>
+			{% endfor %}
+		</select>
+		<input type="submit" value="Recommend">
+	</form>
+
+	{% if names and posters %}
+		<h2>Recommended Movies:</h2>
+		<div class="movies-container">
+			{% for  name , poster in  zip(names,posters) %}
+				<div class="movie-card" onclick="window.open('{{ link }}', '_blank')">
+					<img src="{{ poster }}" alt="{{ name }}">
+					<h3>{{ name }}</h3>
+				</div>
+			{% endfor %}
+		</div>
+	{% endif %}
+</body>
+</html>
